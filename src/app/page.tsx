@@ -1,12 +1,16 @@
 import Image from "next/image";
 import Hero from "@/components/Hero";
+import Navbar from "@/components/Navbar";
+import Projects from "@/components/Projects";
+import Stats from "@/components/Stats";
 
 export default function Home() {
   return (
     <main className="bg-white min-h-screen">
-      {/* Hier kommt später noch eine Navbar hin */}
+      <Navbar />
       <Hero />
-      {/* Hier kommen später Projects und Footer hin */}
+      <Stats />
+      <Projects />
     </main>
   );
 }
