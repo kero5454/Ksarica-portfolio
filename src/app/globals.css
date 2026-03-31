@@ -1,7 +1,17 @@
 @import "tailwindcss";
 
-/* Animationen */
 @theme {
+  /* HeroPage Animationen */
+  --animate-spin-slow: spin 20s linear infinite;
+  --animate-spin-slow-reverse: spin-reverse 25s linear infinite;
+
+  @keyframes spin-reverse {
+    to {
+      transform: rotate(-360deg);
+    }
+  }
+  
+  /* Scroll Animationen */
   --animate-scroll: scroll 30s linear infinite;
 
   @keyframes scroll {

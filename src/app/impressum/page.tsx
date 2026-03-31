@@ -18,16 +18,16 @@ export default function ImpressumPage() {
         <h2 className="text-xl font-semibold">Angaben gemäß § 5 DDG</h2>
         <p>
           Kerem Sarica<br />
-          Musterstraße 1<br />
-          12345 Musterstadt<br />
+          Rathausstraße 16<br />
+          72649 Wolfschlugen<br />
         </p>
       </section>
 
       <section className="mb-8 space-y-4">
         <h2 className="text-xl font-semibold">Kontakt</h2>
         <p>
-          Telefon: +49 (0) 123 445566 <br />
-          E-Mail: mail@keremsarica.de
+          Telefon: +49 (0) 157 3203 0710 <br />
+          E-Mail: Kerem.sarica [@] outlook.de
         </p>
       </section>
 
@@ -35,12 +35,40 @@ export default function ImpressumPage() {
         <h2 className="text-xl font-semibold">Redaktionell verantwortlich</h2>
         <p>
           Kerem Sarica<br />
-          Musterstraße 1<br />
-          12345 Musterstadt
+          Rathausstraße 16<br />
+          72649 Wolfschlugen
         </p>
       </section>
       
-      {/* Hier ggf. Disclaimer / Haftungsausschluss einfügen */}
+      <section className="mb-8 space-y-4 text-sm">
+        <h2 className="text-xl font-semibold">Haftungsausschluss (Disclaimer)</h2>
+        
+        <div className="space-y-3">
+          <h3 className="font-semibold text-base">Haftung für Inhalte</h3>
+          <p>
+            Als Diensteanbieter sind wir gemäß § 7 Abs.1 DDG für eigene Inhalte auf diesen Seiten nach den 
+            allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 DDG sind wir als Diensteanbieter jedoch nicht 
+            verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu 
+            forschen, die auf eine rechtswidrige Tätigkeit hinweisen. Verpflichtungen zur Entfernung oder Sperrung der 
+            Nutzung von Informationen nach den allgemeinen Gesetzen bleiben hiervon unberührt.
+          </p>
+
+          <h3 className="font-semibold text-base mt-4">Haftung für Links</h3>
+          <p>
+            Unser Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. 
+            Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten 
+            Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich.
+          </p>
+
+          <h3 className="font-semibold text-base mt-4">Urheberrecht</h3>
+          <p>
+            Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen 
+            Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der 
+            Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers. 
+            Downloads und Kopien dieser Seite sind nur für den privaten, nicht kommerziellen Gebrauch gestattet.
+          </p>
+        </div>
+      </section>
     </div>
   );
 }

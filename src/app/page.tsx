@@ -11,7 +11,7 @@ export default function Home() {
       <Hero />
       
       {/* 2. Über mich (Intro) */}
-      <AboutSection />
+      {/* <AboutSection /> */}
       
       {/* 3. Statistiken */}
       <Stats />
