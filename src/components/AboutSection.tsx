@@ -1,8 +1,7 @@
 import React from 'react';
-import { hardSkills, personalInfo } from "@/data/cv-data"; // Import angepasst
+import { hardSkills, personalInfo } from "@/data/cv-data";
 
 export default function AboutSection() {
-  // Wir nehmen nur die ersten 6 Skills für die Übersicht, damit die Box nicht platzt
   const featuredSkills = hardSkills.slice(0, 6);
 
   return (

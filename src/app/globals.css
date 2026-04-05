@@ -1,14 +1,14 @@
 @import "tailwindcss";
 
 @theme {
-  /* Animationen deklarieren */
-  --animate-spin-slow: spin 25s linear infinite;
+  /* ── Custom animations ──────────────────────────────────────────────────────── */
+  --animate-spin-slow:         spin 25s linear infinite;
   --animate-spin-slow-reverse: spin-reverse 25s linear infinite;
-  --animate-float: float 3s ease-in-out infinite;
-  --animate-float-delayed: float 3s ease-in-out infinite 1.5s;
-  --animate-scroll: scroll 30s linear infinite;
+  --animate-float:             float 3s ease-in-out infinite;
+  --animate-float-delayed:     float 3s ease-in-out infinite 1.5s;
+  --animate-scroll:            scroll 30s linear infinite;
 
-  /* Keyframes */
+  /* ── Keyframes ──────────────────────────────────────────────────────────────── */
   @keyframes spin-reverse {
     to { transform: rotate(-360deg); }
   }
@@ -17,7 +17,7 @@
     100% { transform: translateX(-50%); }
   }
   @keyframes slide-up {
-    from { opacity: 0; transform: translateY(24px); }
+    from { opacity: 0; transform: translateY(20px); }
     to   { opacity: 1; transform: translateY(0); }
   }
   @keyframes fade-in {
@@ -26,10 +26,8 @@
   }
   @keyframes float {
     0%, 100% { transform: translateY(0px); }
-    50%      { transform: translateY(-6px); }
+    50%      { transform: translateY(-7px); }
   }
-
-  /* Project card & modal keyframes */
   @keyframes img-fade {
     from { opacity: 0; transform: scale(1.02); }
     to   { opacity: 1; transform: scale(1); }
@@ -45,7 +43,7 @@
 @layer utilities {
   .animate-slide-up {
     opacity: 0;
-    animation: slide-up 0.6s ease forwards;
+    animation: slide-up 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
   .animate-fade-in {
     opacity: 0;
@@ -53,22 +51,73 @@
   }
 }
 
-/* ── Project Cards ──────────────────────────────────────────────────────────── */
+/* ── Global design tokens ───────────────────────────────────────────────────── */
+
+:root {
+  --bg-base:       #f7f7f5;
+  --bg-surface:    #ffffff;
+  --fg-primary:    #0f0f0e;
+  --fg-secondary:  #6b6b6b;
+  --accent:        #2952e3;
+  --accent-light:  #eff3ff;
+  --border-subtle: rgba(0, 0, 0, 0.07);
+}
+
+/* ── Base styles ────────────────────────────────────────────────────────────── */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg-base);
+  color: var(--fg-primary);
+  font-family: var(--font-geist-sans, system-ui, sans-serif);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  /* Layered: noise grain + two soft blue mesh blobs */
+  background-image:
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.028'/%3E%3C/svg%3E"),
+    radial-gradient(ellipse 720px 520px at 85% 5%,  rgba(41, 82, 227, 0.08) 0%, transparent 70%),
+    radial-gradient(ellipse 480px 380px at 5%  90%, rgba(99, 140, 255, 0.06) 0%, transparent 65%);
+  background-attachment: fixed;
+}
+
+/* ── Navbar glass ───────────────────────────────────────────────────────────── */
+
+.navbar-glass {
+  background: rgba(247, 247, 245, 0.72);
+  backdrop-filter: blur(20px) saturate(1.6);
+  -webkit-backdrop-filter: blur(20px) saturate(1.6);
+  border-bottom: 1px solid var(--border-subtle);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.navbar-glass.scrolled {
+  background: rgba(247, 247, 245, 0.92);
+  box-shadow: 0 1px 28px rgba(0, 0, 0, 0.07);
+}
+
+/* ── Project cards ──────────────────────────────────────────────────────────── */
 
 .project-card {
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(0, 0, 0, 0.04);
+  background: var(--bg-surface);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 0 0 1px var(--border-subtle);
   transform: translateY(0) scale(1);
   transition:
-    transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
-    box-shadow 0.35s ease;
+    transform 0.38s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.38s ease;
   will-change: transform;
 }
 
 .project-card:hover {
   transform: translateY(-10px) scale(1.015);
   box-shadow:
-    0 28px 64px rgba(0, 0, 0, 0.14),
-    0 8px 24px rgba(0, 0, 0, 0.07),
+    0 30px 70px rgba(0, 0, 0, 0.12),
+    0 8px 24px rgba(0, 0, 0, 0.06),
     0 0 0 1px rgba(0, 0, 0, 0.05);
 }
 
@@ -93,37 +142,15 @@
 }
 
 .project-card:hover .project-card-link {
-  color: #111827;
+  color: #0f0f0e;
 }
 
-/* ── Modal image animation ──────────────────────────────────────────────────── */
+/* ── Modal & lightbox ───────────────────────────────────────────────────────── */
 
 .modal-img-fade {
   animation: img-fade 0.22s ease;
 }
 
-/* ── Lightbox image animation ───────────────────────────────────────────────── */
-
 .lightbox-img-fade {
   animation: lb-fade 0.2s ease;
-}
-
-/* ── Global ─────────────────────────────────────────────────────────────────── */
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
 }
