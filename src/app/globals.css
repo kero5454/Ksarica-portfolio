@@ -13,7 +13,7 @@
     to { transform: rotate(-360deg); }
   }
   @keyframes scroll {
-    0% { transform: translateX(0); }
+    0%   { transform: translateX(0); }
     100% { transform: translateX(-50%); }
   }
   @keyframes slide-up {
@@ -28,9 +28,20 @@
     0%, 100% { transform: translateY(0px); }
     50%      { transform: translateY(-6px); }
   }
+
+  /* Project card & modal keyframes */
+  @keyframes img-fade {
+    from { opacity: 0; transform: scale(1.02); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+  @keyframes lb-fade {
+    from { opacity: 0; transform: scale(0.96); }
+    to   { opacity: 1; transform: scale(1); }
+  }
 }
 
-/* Eigene Utility-Klassen für die Start-Animationen */
+/* ── Utility classes ────────────────────────────────────────────────────────── */
+
 @layer utilities {
   .animate-slide-up {
     opacity: 0;
@@ -42,7 +53,63 @@
   }
 }
 
-/* global css */
+/* ── Project Cards ──────────────────────────────────────────────────────────── */
+
+.project-card {
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(0, 0, 0, 0.04);
+  transform: translateY(0) scale(1);
+  transition:
+    transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.35s ease;
+  will-change: transform;
+}
+
+.project-card:hover {
+  transform: translateY(-10px) scale(1.015);
+  box-shadow:
+    0 28px 64px rgba(0, 0, 0, 0.14),
+    0 8px 24px rgba(0, 0, 0, 0.07),
+    0 0 0 1px rgba(0, 0, 0, 0.05);
+}
+
+.project-card-img {
+  transition: transform 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.project-card:hover .project-card-img {
+  transform: scale(1.07);
+}
+
+.project-card-label {
+  transition: color 0.25s ease;
+}
+
+.project-card:hover .project-card-label {
+  color: #6b7280;
+}
+
+.project-card-link {
+  transition: color 0.25s ease;
+}
+
+.project-card:hover .project-card-link {
+  color: #111827;
+}
+
+/* ── Modal image animation ──────────────────────────────────────────────────── */
+
+.modal-img-fade {
+  animation: img-fade 0.22s ease;
+}
+
+/* ── Lightbox image animation ───────────────────────────────────────────────── */
+
+.lightbox-img-fade {
+  animation: lb-fade 0.2s ease;
+}
+
+/* ── Global ─────────────────────────────────────────────────────────────────── */
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
