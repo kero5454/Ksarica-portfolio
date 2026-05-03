@@ -1,71 +1,134 @@
-import React from 'react';
-import { Download, Briefcase, GraduationCap, Trophy, Globe, Code, User, MapPin, Mail, Phone, ExternalLink } from "lucide-react";
-import { experienceData, educationData, hardSkills, softSkills, languages, awards, personalInfo } from "@/data/cv-data";
+"use client";
+
+import {
+  Download, Briefcase, GraduationCap, Trophy,
+  Globe, Code, User, MapPin, Mail, Phone, ExternalLink,
+} from "lucide-react";
+import {
+  experienceData, educationData, hardSkills,
+  softSkills, softSkillsEn, languages, awards, personalInfo,
+} from "@/data/cv-data";
+import { useTranslation } from "@/context/LanguageProvider";
 
 export default function LebenslaufPage() {
+  const { t, lang } = useTranslation();
+  const isEn = lang === "en";
+
+  /* Helpers to pick the right language field with DE fallback */
+  const d  = (de: string, en?: string)  => (isEn && en ? en : de);
+  const skills = isEn ? softSkillsEn : softSkills;
+
   return (
-    <main className="bg-gray-50 min-h-screen py-12 px-4 md:px-8">
+    <main className="min-h-screen py-12 px-4 md:px-8">
       <div className="max-w-6xl mx-auto">
 
-        {/* --- Header --- */}
+        {/* ── Header ─────────────────────────────────────────────────────── */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-6">
           <div>
-            <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight mb-2">Lebenslauf</h1>
-            <p className="text-gray-500 text-lg">Mein Werdegang, Erfahrungen und Qualifikationen im Überblick.</p>
+            <h1
+              className="text-4xl font-extrabold tracking-tight mb-2"
+              style={{ color: "var(--fg-primary)" }}
+            >
+              {t("cv.title")}
+            </h1>
+            <p className="text-lg" style={{ color: "var(--fg-secondary)" }}>
+              {t("cv.subtitle")}
+            </p>
           </div>
-
           <a
             href="/Lebenslauf_Kerem_Sarica.pdf"
             download="Lebenslauf_Kerem_Sarica"
-            className="group flex items-center gap-2 bg-gray-900 text-white px-6 py-3 rounded-xl font-medium hover:bg-gray-800 transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5"
+            className="group flex items-center gap-2 px-6 py-3 rounded-xl font-medium transition-all hover:-translate-y-0.5"
+            style={{
+              background:  "var(--accent)",
+              color:       "var(--bg-base)",
+              boxShadow:   "0 4px 20px rgba(0,0,0,0.15)",
+            }}
           >
             <Download size={18} className="group-hover:animate-bounce" />
-            PDF Download
+            {t("cv.download")}
           </a>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
-          {/* --- Linke Spalte (Sidebar: Info, Skills) --- */}
+          {/* ── Sidebar ───────────────────────────────────────────────────── */}
           <aside className="space-y-8">
 
-            {/* Kontakt Karte */}
-            <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-              <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
-                <User size={20} className="text-blue-600" /> Kontakt
+            {/* Contact */}
+            <div
+              className="p-6 rounded-2xl border"
+              style={{
+                background:   "var(--bg-surface)",
+                borderColor:  "var(--border-subtle)",
+                boxShadow:    "var(--shadow-card)",
+              }}
+            >
+              <h3
+                className="text-lg font-bold mb-4 flex items-center gap-2"
+                style={{ color: "var(--fg-primary)" }}
+              >
+                <User size={20} style={{ color: "var(--accent)" }} />
+                {t("cv.contact")}
               </h3>
-              <div className="space-y-3 text-sm text-gray-600">
+              <div className="space-y-3 text-sm" style={{ color: "var(--fg-secondary)" }}>
                 <div className="flex items-start gap-3">
                   <MapPin size={16} className="mt-1 shrink-0" />
                   <span>{personalInfo.location}</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <Mail size={16} className="shrink-0" />
-                  <a href={`mailto:${personalInfo.email}`} className="hover:text-blue-600 transition">{personalInfo.email}</a>
+                  <a
+                    href={`mailto:${personalInfo.email}`}
+                    className="hover:underline"
+                    style={{ color: "var(--accent)" }}
+                  >
+                    {personalInfo.email}
+                  </a>
                 </div>
                 <div className="flex items-center gap-3">
                   <Phone size={16} className="shrink-0" />
                   <span>{personalInfo.phone}</span>
                 </div>
-                <div className="pt-2 border-t border-gray-100 mt-2 flex flex-col gap-2">
-                  <a href={personalInfo.linkedin} target="_blank" className="flex items-center gap-2 text-blue-600 hover:underline">
-                    <ExternalLink size={14} /> LinkedIn Profil
+                <div
+                  className="pt-2 mt-2 flex flex-col gap-2"
+                  style={{ borderTop: "1px solid var(--border-subtle)" }}
+                >
+                  <a
+                    href={personalInfo.linkedin}
+                    target="_blank"
+                    className="flex items-center gap-2 hover:underline"
+                    style={{ color: "var(--accent)" }}
+                  >
+                    <ExternalLink size={14} /> {t("cv.linkedin")}
                   </a>
-                  {/* <a href={personalInfo.gitlab} target="_blank" className="flex items-center gap-2 text-orange-600 hover:underline">
-                     <ExternalLink size={14} /> GitLab Portfolio
-                   </a> */}
                 </div>
               </div>
             </div>
 
-            {/* IT-Kenntnisse */}
-            <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-              <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
-                <Code size={20} className="text-blue-600" /> IT-Kenntnisse
+            {/* IT Skills */}
+            <div
+              className="p-6 rounded-2xl border"
+              style={{
+                background:  "var(--bg-surface)",
+                borderColor: "var(--border-subtle)",
+                boxShadow:   "var(--shadow-card)",
+              }}
+            >
+              <h3
+                className="text-lg font-bold mb-4 flex items-center gap-2"
+                style={{ color: "var(--fg-primary)" }}
+              >
+                <Code size={20} style={{ color: "var(--accent)" }} />
+                {t("cv.itSkills")}
               </h3>
               <div className="flex flex-wrap gap-2">
                 {hardSkills.map((skill, i) => (
-                  <span key={i} className="px-3 py-1 bg-blue-50 text-blue-700 text-sm font-medium rounded-lg">
+                  <span
+                    key={i}
+                    className="px-3 py-1 text-sm font-medium rounded-lg"
+                    style={{ background: "var(--accent-light)", color: "var(--accent)" }}
+                  >
                     {skill}
                   </span>
                 ))}
@@ -73,84 +136,161 @@ export default function LebenslaufPage() {
             </div>
 
             {/* Soft Skills */}
-            <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-              <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
-                <User size={20} className="text-green-600" /> Soft Skills
+            <div
+              className="p-6 rounded-2xl border"
+              style={{
+                background:  "var(--bg-surface)",
+                borderColor: "var(--border-subtle)",
+                boxShadow:   "var(--shadow-card)",
+              }}
+            >
+              <h3
+                className="text-lg font-bold mb-4 flex items-center gap-2"
+                style={{ color: "var(--fg-primary)" }}
+              >
+                <User size={20} style={{ color: "#22c55e" }} />
+                {t("cv.softSkills")}
               </h3>
               <ul className="space-y-2">
-                {softSkills.map((skill, i) => (
-                  <li key={i} className="flex items-center gap-2 text-gray-700 text-sm">
-                    <div className="w-1.5 h-1.5 rounded-full bg-green-500" /> {skill}
+                {skills.map((skill, i) => (
+                  <li
+                    key={i}
+                    className="flex items-center gap-2 text-sm"
+                    style={{ color: "var(--fg-secondary)" }}
+                  >
+                    <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
+                    {skill}
                   </li>
                 ))}
               </ul>
             </div>
 
-            {/* Sprachen */}
-            <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-              <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
-                <Globe size={20} className="text-purple-600" /> Sprachen
+            {/* Languages */}
+            <div
+              className="p-6 rounded-2xl border"
+              style={{
+                background:  "var(--bg-surface)",
+                borderColor: "var(--border-subtle)",
+                boxShadow:   "var(--shadow-card)",
+              }}
+            >
+              <h3
+                className="text-lg font-bold mb-4 flex items-center gap-2"
+                style={{ color: "var(--fg-primary)" }}
+              >
+                <Globe size={20} style={{ color: "#a855f7" }} />
+                {t("cv.languages")}
               </h3>
               <div className="space-y-3">
                 {languages.map((lang, i) => (
                   <div key={i} className="flex justify-between items-center text-sm">
-                    <span className="font-medium text-gray-800">{lang.language}</span>
-                    <span className="text-gray-500 bg-gray-50 px-2 py-0.5 rounded text-xs">{lang.level}</span>
+                    <span className="font-medium" style={{ color: "var(--fg-primary)" }}>
+                      {d(lang.language, lang.languageEn)}
+                    </span>
+                    <span
+                      className="px-2 py-0.5 rounded text-xs"
+                      style={{ background: "var(--bg-elevated)", color: "var(--fg-secondary)" }}
+                    >
+                      {d(lang.level, lang.levelEn)}
+                    </span>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Auszeichnungen */}
-            <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-              <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
-                <Trophy size={20} className="text-yellow-500" /> Sonstiges
+            {/* Other / Awards */}
+            <div
+              className="p-6 rounded-2xl border"
+              style={{
+                background:  "var(--bg-surface)",
+                borderColor: "var(--border-subtle)",
+                boxShadow:   "var(--shadow-card)",
+              }}
+            >
+              <h3
+                className="text-lg font-bold mb-4 flex items-center gap-2"
+                style={{ color: "var(--fg-primary)" }}
+              >
+                <Trophy size={20} style={{ color: "#eab308" }} />
+                {t("cv.other")}
               </h3>
               <ul className="space-y-3">
                 {awards.map((award, i) => (
                   <li key={i} className="text-sm">
-                    <div className="font-medium text-gray-800">{award.title}</div>
-                    <div className="text-gray-500 text-xs">{award.date}</div>
+                    <div className="font-medium" style={{ color: "var(--fg-primary)" }}>
+                      {award.title}
+                    </div>
+                    <div className="text-xs" style={{ color: "var(--fg-tertiary)" }}>
+                      {d(award.date, award.dateEn)}
+                    </div>
                   </li>
                 ))}
               </ul>
             </div>
-
           </aside>
 
-          {/* --- Rechte Spalte (Hauptinhalt: Experience & Education) --- */}
+          {/* ── Main content ──────────────────────────────────────────────── */}
           <div className="lg:col-span-2 space-y-8">
 
-            {/* Berufserfahrung Section */}
+            {/* Work Experience */}
             <section>
-              <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
-                <div className="p-2 bg-orange-100 rounded-lg text-orange-600">
+              <h2
+                className="text-2xl font-bold mb-6 flex items-center gap-3"
+                style={{ color: "var(--fg-primary)" }}
+              >
+                <div
+                  className="p-2 rounded-lg"
+                  style={{ background: "rgba(249,115,22,0.1)", color: "#f97316" }}
+                >
                   <Briefcase size={24} />
                 </div>
-                Beruflicher Werdegang
+                {t("cv.experience")}
               </h2>
-
               <div className="space-y-6">
                 {experienceData.map((item) => (
                   <div key={item.id} className="relative pl-8 md:pl-0">
-                    {/* Timeline Linie Mobile */}
-                    <div className="md:hidden absolute left-2 top-2 bottom-0 w-0.5 bg-gray-200"></div>
-
-                    <div className="group bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all">
+                    <div
+                      className="md:hidden absolute left-2 top-2 bottom-0 w-0.5"
+                      style={{ background: "var(--border-subtle)" }}
+                    />
+                    <div
+                      className="group p-6 rounded-2xl border transition-all"
+                      style={{
+                        background:  "var(--bg-surface)",
+                        borderColor: "var(--border-subtle)",
+                        boxShadow:   "var(--shadow-card)",
+                      }}
+                    >
                       <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-2">
                         <div>
-                          <h3 className="text-lg font-bold text-gray-900">{item.title}</h3>
-                          <div className="text-orange-600 font-medium text-sm mb-1">{item.company}</div>
+                          <h3
+                            className="text-lg font-bold"
+                            style={{ color: "var(--fg-primary)" }}
+                          >
+                            {d(item.title, item.titleEn)}
+                          </h3>
+                          <div className="font-medium text-sm mb-1" style={{ color: "#f97316" }}>
+                            {item.company}
+                          </div>
                         </div>
-                        <span className="inline-block md:text-right text-xs font-semibold text-gray-500 bg-gray-100 px-3 py-1 rounded-full w-fit">
-                          {item.date}
+                        <span
+                          className="inline-block md:text-right text-xs font-semibold px-3 py-1 rounded-full w-fit"
+                          style={{
+                            background: "var(--bg-elevated)",
+                            color:      "var(--fg-secondary)",
+                          }}
+                        >
+                          {d(item.date, item.dateEn)}
                         </span>
                       </div>
-                      <div className="text-xs text-gray-400 mb-3 flex items-center gap-1">
+                      <div
+                        className="text-xs mb-3 flex items-center gap-1"
+                        style={{ color: "var(--fg-tertiary)" }}
+                      >
                         <MapPin size={12} /> {item.location}
                       </div>
-                      <p className="text-gray-600 text-sm leading-relaxed">
-                        {item.description}
+                      <p className="text-sm leading-relaxed" style={{ color: "var(--fg-secondary)" }}>
+                        {d(item.description, item.descriptionEn)}
                       </p>
                     </div>
                   </div>
@@ -158,41 +298,74 @@ export default function LebenslaufPage() {
               </div>
             </section>
 
-            {/* Ausbildung Section */}
+            {/* Education */}
             <section>
-              <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
-                <div className="p-2 bg-blue-100 rounded-lg text-blue-600">
+              <h2
+                className="text-2xl font-bold mb-6 flex items-center gap-3"
+                style={{ color: "var(--fg-primary)" }}
+              >
+                <div
+                  className="p-2 rounded-lg"
+                  style={{ background: "var(--accent-light)", color: "var(--accent)" }}
+                >
                   <GraduationCap size={24} />
                 </div>
-                Akademischer Werdegang
+                {t("cv.education")}
               </h2>
-
               <div className="space-y-6">
                 {educationData.map((item) => (
-                  <div key={item.id} className="group bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all">
+                  <div
+                    key={item.id}
+                    className="group p-6 rounded-2xl border transition-all"
+                    style={{
+                      background:  "var(--bg-surface)",
+                      borderColor: "var(--border-subtle)",
+                      boxShadow:   "var(--shadow-card)",
+                    }}
+                  >
                     <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-2">
                       <div>
-                        <h3 className="text-lg font-bold text-gray-900">{item.title}</h3>
-                        <div className="text-blue-600 font-medium text-sm mb-1">{item.institution}</div>
+                        <h3
+                          className="text-lg font-bold"
+                          style={{ color: "var(--fg-primary)" }}
+                        >
+                          {d(item.title, item.titleEn)}
+                        </h3>
+                        <div
+                          className="font-medium text-sm mb-1"
+                          style={{ color: "var(--accent)" }}
+                        >
+                          {item.institution}
+                        </div>
                       </div>
-                      <span className={`inline-flex items-center gap-2 text-xs font-semibold px-3 py-1 rounded-full w-fit mt-2 md:mt-0 ${item.isCurrent
-                        ? 'bg-blue-50 text-blue-600 border border-blue-100' // Styling für "Aktuell"
-                        : 'bg-gray-100 text-gray-500' // Styling für alle anderen
-                        }`}>
-
+                      <span
+                        className="inline-flex items-center gap-2 text-xs font-semibold px-3 py-1 rounded-full w-fit mt-2 md:mt-0"
+                        style={{
+                          background: item.isCurrent ? "var(--accent-light)" : "var(--bg-elevated)",
+                          color:      item.isCurrent ? "var(--accent)" : "var(--fg-secondary)",
+                          border:     item.isCurrent ? "1px solid var(--border-subtle)" : "none",
+                        }}
+                      >
                         {item.isCurrent && (
                           <span className="relative flex h-2 w-2">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+                            <span
+                              className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75"
+                              style={{ background: "var(--accent)" }}
+                            />
+                            <span
+                              className="relative inline-flex rounded-full h-2 w-2"
+                              style={{ background: "var(--accent)" }}
+                            />
                           </span>
                         )}
-
-                        {item.date}
+                        {d(item.date, item.dateEn)}
                       </span>
-
                     </div>
-                    <p className="text-gray-600 text-sm leading-relaxed mt-2">
-                      {item.description}
+                    <p
+                      className="text-sm leading-relaxed mt-2"
+                      style={{ color: "var(--fg-secondary)" }}
+                    >
+                      {d(item.description, item.descriptionEn)}
                     </p>
                   </div>
                 ))}

@@ -3,16 +3,19 @@ import AboutSection from "@/components/AboutSection";
 import TimelineSection from "@/components/TimelineSection";
 import Projects from "@/components/Projects";
 import Stats from "@/components/Stats";
+import ContactSection from "@/components/ContactSection";
 
 export default function Home() {
   return (
-    <main className="bg-white min-h-screen">
+    <main className="min-h-screen">
       <Hero />
+      <AboutSection />
       <Stats />
       <TimelineSection />
       <div id="projects">
         <Projects />
       </div>
+      <ContactSection />
     </main>
   );
 }

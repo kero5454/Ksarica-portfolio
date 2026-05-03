@@ -11,7 +11,7 @@ export const metadata = {
 
 export default function DatenschutzPage() {
   return (
-    <div className="max-w-3xl mx-auto px-4 py-12 text-gray-800 dark:text-gray-200">
+    <div className="max-w-3xl mx-auto px-4 py-12" style={{ color: "var(--fg-primary)" }}>
       <h1 className="text-3xl font-bold mb-6">Datenschutzerklärung</h1>
       
       <div className="prose dark:prose-invert">
