@@ -12,6 +12,7 @@ export interface CVItem {
   shortDescription?: string;
   type?: string;
   isCurrent?: boolean;
+  certificateUrl?: string;  // Path to internship/job certificate PDF
 }
 
 // --- Stammdaten / Personal info ---
@@ -43,6 +44,7 @@ export const experienceData: CVItem[] = [
     shortDescription:
       "Aufbau einer automatisierten CI/CD-Testumgebung (Python, QF-Test) sowie Optimierung von UI-Texten und Testabläufen für die STIHL Diagnose Software.",
     type: "work",
+    certificateUrl: "/Abschlusszeugnis%20-%20Kerem%20Sarica.pdf",
   },
   {
     id: 3,

@@ -38,7 +38,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="de" className="scroll-smooth" suppressHydrationWarning>
+    <html lang="de" className="scroll-smooth" data-scroll-behavior="smooth" suppressHydrationWarning>
       <body
         className={`${spaceGrotesk.variable} ${geistMono.variable} ${montserrat.variable} ${jetbrainsMono.variable} antialiased flex flex-col min-h-screen`}
       >
@@ -61,6 +61,13 @@ export default function RootLayout({
             }, { passive: true });
             if (matchMedia('(pointer: coarse)').matches) blob.style.display = 'none';
           })();
+        `}</Script>
+        <Script id="chunk-error-recovery" strategy="afterInteractive">{`
+          window.addEventListener('unhandledrejection', function(e) {
+            if (e.reason && e.reason.name === 'ChunkLoadError') {
+              window.location.reload();
+            }
+          });
         `}</Script>
       </body>
     </html>

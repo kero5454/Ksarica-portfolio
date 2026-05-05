@@ -1,8 +1,10 @@
 "use client";
 
+import { useState } from "react";
 import {
   Download, Briefcase, GraduationCap, Trophy,
   Globe, Code, User, MapPin, Mail, Phone, ExternalLink,
+  FileText, X,
 } from "lucide-react";
 import {
   experienceData, educationData, hardSkills,
@@ -13,6 +15,7 @@ import { useTranslation } from "@/context/LanguageProvider";
 export default function LebenslaufPage() {
   const { t, lang } = useTranslation();
   const isEn = lang === "en";
+  const [certUrl, setCertUrl] = useState<string | null>(null);
 
   /* Helpers to pick the right language field with DE fallback */
   const d  = (de: string, en?: string)  => (isEn && en ? en : de);
@@ -292,6 +295,19 @@ export default function LebenslaufPage() {
                       <p className="text-sm leading-relaxed" style={{ color: "var(--fg-secondary)" }}>
                         {d(item.description, item.descriptionEn)}
                       </p>
+                      {item.certificateUrl && (
+                        <button
+                          onClick={() => setCertUrl(item.certificateUrl!)}
+                          className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all hover:-translate-y-0.5"
+                          style={{
+                            background: "var(--accent-light)",
+                            color: "var(--accent)",
+                          }}
+                        >
+                          <FileText size={15} />
+                          {isEn ? "View Certificate" : "Zeugnis ansehen"}
+                        </button>
+                      )}
                     </div>
                   </div>
                 ))}
@@ -375,6 +391,62 @@ export default function LebenslaufPage() {
           </div>
         </div>
       </div>
+
+      {/* ── Certificate Modal ──────────────────────────────────────────── */}
+      {certUrl && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          style={{ background: "rgba(0,0,0,0.65)", backdropFilter: "blur(4px)" }}
+          onClick={() => setCertUrl(null)}
+        >
+          <div
+            className="relative w-full max-w-4xl rounded-2xl overflow-hidden flex flex-col"
+            style={{
+              background: "var(--bg-surface)",
+              boxShadow: "0 25px 60px rgba(0,0,0,0.4)",
+              maxHeight: "90vh",
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Header */}
+            <div
+              className="flex items-center justify-between px-6 py-4 shrink-0"
+              style={{ borderBottom: "1px solid var(--border-subtle)" }}
+            >
+              <div className="flex items-center gap-2 font-semibold" style={{ color: "var(--fg-primary)" }}>
+                <FileText size={18} style={{ color: "var(--accent)" }} />
+                {isEn ? "Internship Certificate – ANDREAS STIHL AG & Co. KG" : "Abschlusszeugnis – ANDREAS STIHL AG & Co. KG"}
+              </div>
+              <div className="flex items-center gap-3">
+                <a
+                  href={certUrl}
+                  download="Abschlusszeugnis_Kerem_Sarica"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all hover:-translate-y-0.5"
+                  style={{ background: "var(--accent)", color: "var(--bg-base)" }}
+                >
+                  <Download size={15} />
+                  {isEn ? "Download" : "Herunterladen"}
+                </a>
+                <button
+                  onClick={() => setCertUrl(null)}
+                  className="p-2 rounded-lg transition-colors hover:opacity-70"
+                  style={{ background: "var(--bg-elevated)", color: "var(--fg-secondary)" }}
+                >
+                  <X size={18} />
+                </button>
+              </div>
+            </div>
+
+            {/* PDF viewer */}
+            <iframe
+              src={certUrl}
+              className="w-full flex-1"
+              style={{ minHeight: "70vh", border: "none" }}
+              title="Abschlusszeugnis"
+            />
+          </div>
+        </div>
+      )}
     </main>
   );
 }
