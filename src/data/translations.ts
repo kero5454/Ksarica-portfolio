@@ -47,6 +47,7 @@ const de = {
   "about.label": "Über Mich",
   "about.heading1": "Die Brücke zwischen",
   "about.heading2": "Design & Code",
+  "about.p1H": "H",
   "about.p1":
     "allo! Ich bin Kerem, ein passionierter Software Engineer und Designer. Meine Reise begann mit der Faszination dafür, wie Dinge funktionieren – heute entwickle ich moderne Web-Apps, die nicht nur gut aussehen, sondern auch performant sind.",
   "about.p2":
@@ -152,6 +153,7 @@ const en: Record<keyof typeof de, string> = {
   "about.label": "About Me",
   "about.heading1": "Bridging the gap between",
   "about.heading2": "Design & Code",
+  "about.p1H": "H",
   "about.p1":
     "ello! I'm Kerem, a passionate software engineer and designer. My journey began with a fascination for how things work — today I build modern web apps that don't just look good, but perform great.",
   "about.p2":

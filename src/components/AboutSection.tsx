@@ -15,7 +15,10 @@ export default function AboutSection() {
           <h2 className="h2">
             {t("about.heading1")} <em>{t("about.heading2")}</em>
           </h2>
-          <p className="lead">{t("about.p1")}</p>
+          <p className="lead">
+            <span style={{ color: "var(--accent)", fontSize: "1.5em", fontWeight: 700, lineHeight: 1 }}>{t("about.p1H")}</span>
+            {t("about.p1")}
+          </p>
           <p className="lead" style={{ marginTop: "16px" }}>{t("about.p2")}</p>
           <div className="about__meta">
             <div className="about__meta-item">
